@@ -1,0 +1,48 @@
+global:
+  
+  oidc:
+    credentials:
+      clientId: "${clientId}"
+      clientSecret: "${clientSecret}"
+
+  logging:
+    logLevel: trace
+  ingress:
+    # use the class name that matches your ingress controller.
+    className: ""
+    # https://devopscube.com/create-self-signed-certificates-openssl/
+    # To be used only for self signed certificate in offline cluster scenario.
+    # Always prefer tier 1 certificate signed authorities
+    tls: true
+    #annotations:
+    #  kubernetes.io/ingress.class: azure/application-gateway
+    # used to generate all the endpoints, if below endpoints are not speficied
+    host: ${harmonize_host}
+    # you can specify your own full endpoints. If left empty, endpoints will all be generated from the above provided host 
+    endpoints:
+      frontend: ${harmonize_frontend}
+      api: ${harmonize_api}
+      auth: ${harmonize_auth}
+    annotations:
+      cert-manager.io/cluster-issuer: ""
+      nginx.ingress.kubernetes.io/enable-global-auth: "false"
+      nginx.ingress.kubernetes.io/custom-http-errors: "418"
+  psql:
+    credentials:
+      # <DEFAULT VALUE> is given by postgresql on installation note
+      host: hmz-db-postgresql
+      username: "postgres"
+      password: "${db_password}"
+      port: 5432
+      database: "postgres"
+      urlParams: ""
+      dotNetParams: "Ssl Mode=Disable"
+  amqp:
+    version: "else"
+  telemetry:
+    type: disabled
+  nodeSelector: {}
+
+harmonize-core:
+  approval-notary: 
+    install: true

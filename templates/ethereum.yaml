@@ -1,0 +1,11 @@
+harmonize-core:
+  ledger-accounting: 
+    ledgers:
+      ethereum:
+        networks:
+          - name: ${ethereum_network_name}
+            indexer:
+              values:
+                node:
+                  type: Geth
+                  url: ${ethereum_node_url}
