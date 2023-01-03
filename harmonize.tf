@@ -40,6 +40,10 @@ resource "helm_release" "harmonize" {
         {
           db_password  = local.db_password
           clientSecret = resource.random_string.clientSecret.result
+          harmonize_host = var.endpoints.frontend
+          harmonize_frontend = var.endpoints.frontend
+          harmonize_api = var.endpoints.api
+          harmonize_auth = var.endpoints.auth
         },
         template.vars
       )

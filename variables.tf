@@ -4,6 +4,15 @@ variable "namespace" {
   default = "hmz-terraform"
 }
 
+variable "endpoints" {
+  type        = object({
+    frontend = string
+    api      = string
+    auth     = string
+  })
+  description = "Namespace to deploy"
+}
+
 variable "registry_server" {
   type        = string
   description = "Registry server used to pull Metaco SW"
