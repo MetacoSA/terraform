@@ -5,11 +5,6 @@ resource "helm_release" "db" {
   chart      = "postgresql"
   namespace  = var.namespace
   create_namespace = true
-
-  set {
-    name  = "service.type"
-    value = "ClusterIP"
-  }
 }
 
 data "kubernetes_secret" "db_password" {
