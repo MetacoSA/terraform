@@ -4,7 +4,7 @@ resource "helm_release" "db" {
   repository = "https://charts.bitnami.com/bitnami"
   chart      = "postgresql"
   namespace  = var.namespace
-  create_namespace = true
+  depends_on = [resource.kubernetes_namespace_v1.harmonize]
 }
 
 data "kubernetes_secret" "db_password" {

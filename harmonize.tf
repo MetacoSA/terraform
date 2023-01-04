@@ -3,6 +3,7 @@ resource "kubernetes_secret" "repository_secret" {
     name = "metaco-registry"
     namespace  = var.namespace
   }
+  depends_on = [resource.kubernetes_namespace_v1.harmonize]
 
   type = "kubernetes.io/dockerconfigjson"
 
@@ -31,7 +32,7 @@ resource "helm_release" "harmonize" {
   #repository = "https://charts.bitnami.com/bitnami"
   chart      = "../harmonize-helm/harmonize"
   namespace  = var.namespace
-  create_namespace = true
+  depends_on = [resource.kubernetes_namespace_v1.harmonize]
 
   values = [
     for template in var.harmonize_helm_templates: templatefile(
