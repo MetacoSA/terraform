@@ -35,6 +35,12 @@ variable "registry_email" {
   default    = "fake@email.com"
 }
 
+variable "use_tls" {
+  type        = string
+  description = "Deploy harmonize with TLS"
+  default    = true
+}
+
 variable "harmonize_helm_templates" {
   type        = list(
     object({

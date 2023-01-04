@@ -45,6 +45,7 @@ resource "helm_release" "harmonize" {
           harmonize_frontend = var.endpoints.frontend
           harmonize_api = var.endpoints.api
           harmonize_auth = var.endpoints.auth
+          harmonize_use_tls = var.use_tls
         },
         template.vars
       )

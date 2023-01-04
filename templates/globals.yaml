@@ -13,7 +13,7 @@ global:
     # https://devopscube.com/create-self-signed-certificates-openssl/
     # To be used only for self signed certificate in offline cluster scenario.
     # Always prefer tier 1 certificate signed authorities
-    tls: true
+    tls: ${harmonize_use_tls}
     #annotations:
     #  kubernetes.io/ingress.class: azure/application-gateway
     # used to generate all the endpoints, if below endpoints are not speficied
@@ -27,6 +27,7 @@ global:
       cert-manager.io/cluster-issuer: ""
       nginx.ingress.kubernetes.io/enable-global-auth: "false"
       nginx.ingress.kubernetes.io/custom-http-errors: "418"
+      kubernetes.io/ingress.class: azure/application-gateway
   psql:
     credentials:
       # <DEFAULT VALUE> is given by postgresql on installation note

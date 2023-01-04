@@ -5,6 +5,7 @@ endpoints={
         api      = "api-metaco.example.com"
         auth     = "auth-metaco.example.com"
 }
+use_tls = false # Recomended until we add certificate generation
 harmonize_helm_templates=[
   {
     path: "templates/globals.yaml"
