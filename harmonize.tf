@@ -46,9 +46,14 @@ resource "helm_release" "harmonize" {
           harmonize_api = var.endpoints.api
           harmonize_auth = var.endpoints.auth
           harmonize_use_tls = var.use_tls
+          harmonize_notary_protocol = var.notary_protocol
         },
         template.vars
       )
     )
   ]
+}
+
+output "BEARER_TOKEN" {
+  value="$(curl --location --request POST http://${var.endpoints.auth}/token --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'grant_type=client_credentials' --data-urlencode 'client_id=${var.harmonize_helm_templates[0].vars.clientId}' --data-urlencode 'client_secret=${resource.random_string.clientSecret.result}' | jq -r '.access_token')"
 }

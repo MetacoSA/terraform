@@ -6,7 +6,7 @@ global:
       clientSecret: "${clientSecret}"
 
   logging:
-    logLevel: trace
+    logLevel: info
   ingress:
     # use the class name that matches your ingress controller.
     className: ""
@@ -47,3 +47,17 @@ global:
 harmonize-core:
   approval-notary: 
     install: true
+    service:
+      protocol: ${harmonize_notary_protocol} # grpc|http
+  approval-bridge: 
+    service:
+      protocol: ${harmonize_notary_protocol} # grpc|http
+  vault: 
+    install: true
+    vault:
+      platform: mock
+      id: "00000000-0000-0000-0000-000000000000"
+      harmonize_url: "api-management/internal/v1"
+      mock:
+        seed_phrase: "po_seed_foo"
+      config: trusted.sig += ed25519:50692dfa472f013e2f87e5d210be40cefe178e33787be4688d5da0afe06ed149

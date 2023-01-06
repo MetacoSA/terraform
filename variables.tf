@@ -36,9 +36,19 @@ variable "registry_email" {
 }
 
 variable "use_tls" {
-  type        = string
+  type        = bool
   description = "Deploy harmonize with TLS"
   default    = true
+}
+
+variable "notary_protocol" {
+  type        = string
+  description = "Protocol used by the Notary"
+  default    = "grpc"
+  validation {
+    condition = contains(["http", "grpc"], var.notary_protocol)
+    error_message = "Valid value is one of the following: http, grpc."
+  }
 }
 
 variable "harmonize_helm_templates" {
