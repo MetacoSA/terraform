@@ -44,7 +44,7 @@ variable "use_tls" {
 variable "notary_protocol" {
   type        = string
   description = "Protocol used by the Notary"
-  default    = "grpc"
+  default    = "http"
   validation {
     condition = contains(["http", "grpc"], var.notary_protocol)
     error_message = "Valid value is one of the following: http, grpc."
