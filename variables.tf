@@ -50,7 +50,7 @@ variable "ingress_classname" {
 variable "notary_protocol" {
   type        = string
   description = "Protocol used by the Notary"
-  default    = "http"
+  default    = "grpc"
   validation {
     condition = contains(["http", "grpc"], var.notary_protocol)
     error_message = "Valid value is one of the following: http, grpc."

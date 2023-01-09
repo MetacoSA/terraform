@@ -47,15 +47,16 @@ global:
   nodeSelector: {}
 
 harmonize-core:
-  approval-notary: 
-    install: true
+  approval-bridge: 
     service:
       protocol: ${harmonize_notary_protocol} # grpc|http
-      port: 80
-  approval-bridge: 
+      port: &harmonize_notary_port 80
+  approval-notary: 
+    install: true
     bridge:
       protocol: ${harmonize_notary_protocol} # grpc|http
-      port: 80
+      grpc:
+        port: *harmonize_notary_port
   vault: 
     install: true
     vault:
