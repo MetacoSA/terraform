@@ -51,9 +51,11 @@ harmonize-core:
     install: true
     service:
       protocol: ${harmonize_notary_protocol} # grpc|http
+      port: 80
   approval-bridge: 
-    service:
+    bridge:
       protocol: ${harmonize_notary_protocol} # grpc|http
+      port: 80
   vault: 
     install: true
     vault:
