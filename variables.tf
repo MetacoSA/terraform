@@ -41,6 +41,12 @@ variable "use_tls" {
   default    = true
 }
 
+variable "ingress_classname" {
+  type        = string
+  description = "Ingress class name to use"
+  default    = ""
+}
+
 variable "notary_protocol" {
   type        = string
   description = "Protocol used by the Notary"

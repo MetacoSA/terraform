@@ -27,7 +27,9 @@ global:
       cert-manager.io/cluster-issuer: ""
       nginx.ingress.kubernetes.io/enable-global-auth: "false"
       nginx.ingress.kubernetes.io/custom-http-errors: "418"
-      kubernetes.io/ingress.class: azure/application-gateway
+      %{ if ingress_classname != "" }
+      kubernetes.io/ingress.class: ${ingress_classname}
+      %{ endif }
   psql:
     credentials:
       # <DEFAULT VALUE> is given by postgresql on installation note

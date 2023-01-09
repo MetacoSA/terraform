@@ -47,6 +47,7 @@ resource "helm_release" "harmonize" {
           harmonize_auth = var.endpoints.auth
           harmonize_use_tls = var.use_tls
           harmonize_notary_protocol = var.notary_protocol
+          ingress_classname = var.ingress_classname
         },
         template.vars
       )
