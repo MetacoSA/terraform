@@ -43,8 +43,8 @@ variable "use_tls" {
 
 variable "ingress_classname" {
   type        = string
-  description = "Ingress class name to use"
-  default    = ""
+  description = "Ingress class name to use. Example: nginx if that is used"
+  default     = ""
 }
 
 variable "notary_protocol" {

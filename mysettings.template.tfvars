@@ -6,7 +6,9 @@ endpoints={
         auth     = "auth-metaco.example.com"
 }
 use_tls = false # Recomended until we add certificate generation
-ingress_classname = "azure/application-gateway" # For Azure, let empty if you have a default ingress
+
+# Below setting is for Azure, If nginx, use value "nginx"
+ingress_classname = "azure/application-gateway"
 harmonize_helm_templates=[
   {
     path: "templates/globals.yaml"
