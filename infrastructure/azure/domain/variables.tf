@@ -1,9 +1,9 @@
-variable "resource_group" {
+variable "azure_resource_group" {
   type        = string
   description = "Resource group under which the instances will be created"
 }
 
-variable "dns_root_domain" {
+variable "azure_dns_root_domain" {
   type        = string
   description = "DNS domain that will be used to create Harmonize domains"
 }
@@ -16,10 +16,20 @@ variable "harmonize_domain_prefix" {
                 DESC
 }
 
-variable "public_ip_address" {
-  type  = list
+variable "ingress_ctrl_ip_address" {
+  type        = list(string)
+  default     = []
   description = <<DESC
-                  List of IP addresses to be used in creating DNS A record in harmonize domain
+                  List of IP addresses to be used in creating DNS_A record in harmonize domain
                   When you have Ingress controller, it will be the external IP of that service
+                DESC
+}
+
+variable "ingress_ctrl_hostname" {
+  type        = string
+  default     = ""
+  description = <<DESC
+                  Hostname to be used in creating DNS_CNAME record in harmonize domain
+                  When you have Ingress controller, it will be from the service
                 DESC
 }
