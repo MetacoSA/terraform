@@ -6,6 +6,9 @@ terraform {
   }
 }
 
+# Provider configurations are inherited from the calling(root) module
+# If running this modue as stand-alone, un-comment below lines.
+/*
 provider "helm" {
   # Configuration options
   kubernetes {
@@ -17,3 +20,4 @@ provider "kubernetes" {
     # Configuration options
     config_path = var.kube_config_file
 }
+*/
