@@ -7,9 +7,11 @@ This repository contains the automation required to deploy the AWS Elastic Kuber
 - Creates CNAME or A records depending on the external IP/hostname of  ingress controller service
 
 ## Pre-Requisites: 
-  1. [aws cli](https://aws.amazon.com/cli/) installed on the machine for updating kube config
-  2. [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) installed on the machine and the PATH env is set appropriately
-  3. A pre-registered AWS [Route53 domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html)
+  1. [aws cli](https://aws.amazon.com/cli/) installed and configured on the machine for updating kube config
+
+      -- Run `aws configure` and make sure to give the right values for `AWS Access Key ID`, `AWS Secret Access Key`, and `Default region name` and make sure the values are same for these terraform variables`aws_iam_access_key_id`, `aws_iam_secret_access_key`, and `aws_region`
+  3. [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli) installed on the machine and the PATH env is set appropriately
+  4. A pre-registered AWS [Route53 domain](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/domain-register.html)
       - It will be used as root domain to create further domains for Harmonize
 
 **NOTE** : Since the value of ingress controller external IP/hostname will not be known until after applied, terraform can't handle that since it expects the values to be known during plan.
