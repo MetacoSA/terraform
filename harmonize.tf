@@ -34,6 +34,9 @@ resource "helm_release" "harmonize" {
   namespace  = var.namespace
   depends_on = [resource.kubernetes_namespace_v1.harmonize]
 
+  # Maximum timeout in secs
+  timeout    = 600
+
   values = [
     for template in var.harmonize_helm_templates: templatefile(
       template.path, 
