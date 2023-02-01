@@ -7,7 +7,7 @@ It is WIP so not hardened for production yet. The main objective is to easily de
 ## Prereqs
 
 - Terraform installed in your Laptop (or in a VM)
-- At least 16 GB of memory on your machine
+- At least 16 GB of memory on the host machine
 - Kubernetes cluster with admin credentials installed to your laptop at `$HOME/.kube/config` (default for `kubectl`)
 - this repository checked out to your Laptop
 - [Exprimental Helm chart](https://gitlab.com/MetacoSA/customers/experimental/harmonize-helm) checked out to your laptop - same parent folder as the Terraform checkout.
