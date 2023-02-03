@@ -24,9 +24,10 @@ If you do not know how to get access the above, please check the see [getting st
 
 This deploys Harmonize including its Postgres Database. Checks bellow for limitations and next steps
 
+**Note**: Once everything is deployed, `genesis` needs to be done. For a standard genesis, please run the terraform in `genesis/` folder before the Harmonize can be used
+
 ## To Be Implemented
 
-- [ ] Harmonize Genesis - you need to follow customer documentation for this
 - [ ] Harmonize Genesis - create TLS certificates - until then, you need to ensure your cluster has a default ingress certificate - Harmonize will use it
 - [ ] HPVS support - currently Vault and Notary are deployed as regular containers
 - [ ] HPCS support
