@@ -1,0 +1,26 @@
+services:
+  approval-notary:
+    image: ${image_repository}@sha256:${image_tag}
+
+    environment:
+      HMZ_NOTARY_COLS_DIR: "/data/anti-rewind"
+      HMZ_HC_TRACING_ENABLED: "true"
+      HMZ_HC_TRACING_ENABLED: "true"
+      HMZ_OPEN_TELEMETRY_TYPE: "disabled"
+      HMZ_NOTARY_BRIDGE_HTTP_URI: ${harmonize_notary_bridge_http_uri}
+      HMZ_NOTARY_BRIDGE_HTTP_ENABLED: "true"
+      HMZ_LOG_LEVEL: "TRACE"
+      HMZ_NOTARY_BRIDGE_GRPC_ENABLED: "false"
+      HMZ_NOTARY_HPCS_ENABLED: "true"
+      HMZ_NOTARY_HPCS_HOST: ${crypto_server_ep11_host}
+      HMZ_NOTARY_HPCS_GRPC_PORT: ${crypto_server_ep11_port}
+
+      # IBM Cloud
+      HMZ_NOTARY_HPCS_CLOUD_AUTH_ENABLED: "true"
+      HMZ_NOTARY_HPCS_API_KEY: ${crypto_server_access_api_key}
+      HMZ_NOTARY_HPCS_AUTH_URI: "https://iam.cloud.ibm.com/identity/token"
+      HMZ_NOTARY_HPCS_INSTANCE_ID: ${crypto_server_instance_id}
+
+    volumes:
+      # This is a must as it is needed for anti-rewind file
+      - "/mnt/data:/data"
