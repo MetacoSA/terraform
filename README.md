@@ -10,10 +10,10 @@ It is WIP so not hardened for production yet. The main objective is to easily de
 - At least 16 GB of memory on the host machine
 - Kubernetes cluster with admin credentials installed to your laptop at `$HOME/.kube/config` (default for `kubectl`)
 - this repository checked out to your Laptop
-- [Exprimental Helm chart](https://gitlab.com/MetacoSA/customers/experimental/harmonize-helm) checked out to your laptop - same parent folder as the Terraform checkout.
+- Exprimental Helm chart(Please ask Metaco to provide as ZIP) checked out to your laptop - same parent folder as the Terraform checkout.
 - credentials for the [Metaco Harmonize Container registry](metaco.azurecr.io).
 
-If you do not know how to get access the above, please check the see [getting started](https://metacocloud.sharepoint.com/:u:/r/sites/CustomerSuccess/SitePages/Getting%20started%20at%20Metaco.aspx).
+If you do not know how to get access the above, please contact Metaco.
 
 ## Instructions
 
@@ -34,7 +34,7 @@ This deploys Harmonize including its Postgres Database. Checks bellow for limita
 - [ ] HPCS support
 - [ ] Other HSMs
 - [ ] Automated testcases
-- [ ] Use official Helm charts - until the [exprimental changes](https://gitlab.com/MetacoSA/customers/experimental/harmonize-helm) are merged in prod.
+- [ ] Use official Helm charts - until the exprimental changes are merged in prod.
 
 ## Bugs
 
