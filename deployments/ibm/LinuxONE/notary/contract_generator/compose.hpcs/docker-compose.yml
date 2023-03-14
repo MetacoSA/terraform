@@ -23,4 +23,5 @@ services:
 
     volumes:
       # This is a must as it is needed for anti-rewind file
-      - "/mnt/data:/data"
+      # !!! Changing the target mount point will result in anti-rewind file getting lost on reboot !!!
+      - "/mnt/data:/data/anti-rewind"
