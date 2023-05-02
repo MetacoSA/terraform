@@ -31,15 +31,6 @@ variable "storage_pool_name" {
   description = "Name of the libvirt storage pool on the host"
 }
 
-variable "data_volume_size" {
-   type    = number
-   description = "Size of the data volume to be attached. Must be greater than 10GB"
-   validation {
-     condition  = ( var.data_volume_size > 10737418240 )
-     error_message = "Data volume size must be greater than 10GB"
-  }
-}
-      
 variable "vsi_hostname" {
   type        = string
   description = "Hostname to be given to the created virtual machine."
