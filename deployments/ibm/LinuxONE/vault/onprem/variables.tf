@@ -145,3 +145,8 @@ variable "crypto_server_type" {
        error_message = "crypto server must either be grep11 or hpcs"
   }
 }
+
+variable "vault_uuid" {
+  type        = string
+  description = "UUID to be associated with the Vault instance"
+}

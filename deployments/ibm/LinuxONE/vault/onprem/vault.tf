@@ -14,6 +14,7 @@ module "vault_contract" {
   crypto_server_ep11_host                = var.crypto_server_ep11_host
   crypto_server_ep11_port                = var.crypto_server_ep11_port
   crypto_server_type                     = var.crypto_server_type
+  vault_uuid                             = var.vault_uuid
 
   # Below ones are applicable only while using HPCS from ibm cloud
   crypto_server_instance_id    = ""
@@ -88,6 +89,7 @@ resource "null_resource" "cloudinit_posix" {
   ]
 }
 
+/*
 # This volume contains IBM hyper protect container runtime qcow2 image
 resource "libvirt_volume" "boot_volume_vda" {
   name = format("%s-vda", var.prefix)
@@ -142,3 +144,4 @@ resource "libvirt_domain" "vault_domain" {
     target_type = "sclp"
   }
 }
+*/
