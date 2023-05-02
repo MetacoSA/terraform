@@ -3,10 +3,6 @@ resource "hpcr_tgz" "docker_compose_tgz" {
   folder = "${path.module}/${local.compose_folder}"
 }
 
-# This generates a random UUID to be used as Vault ID
-resource "random_uuid" "vault_id" {
-}
-
 locals {
   compose_folder = (var.crypto_server_type == "hpcs") ? "compose.hpcs" : "compose.grep11"
   tags = ["gen2", "vault", "metaco"]
@@ -43,7 +39,7 @@ locals {
       "env": {
         "image_repository"       : format("%s/%s", var.container_registry, var.container_image_repository)
         "image_sha256"           : var.container_image_sha256
-        "vault_id"               : random_uuid.vault_id.id
+        "vault_id"               : var.vault_uuid
         "harmonize_api_endpoint" : var.harmonize_api_endpoint
       }
     }
