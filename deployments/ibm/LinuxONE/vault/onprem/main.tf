@@ -5,7 +5,7 @@ terraform {
     }
     hpcr = {
       source  = "ibm-hyper-protect/hpcr"
-      version = ">= 0.1.1"
+      version = ">= 0.1.9"
     }
   }
 }
