@@ -6,8 +6,19 @@ variable "hpvs_contract_encryption_key" {
                  DESC
 }
 
+variable "logging_type" {
+  type        = string
+  description = "Logging solution to which the Notary has to send the logs to"
+  validation {
+       condition  = ( var.logging_type == "logdna" ||
+                      var.logging_type == "syslog" )
+       error_message = "logging_type must be either syslog or logdna"
+  }
+}
+
 variable "logdna_ingestion_key" {
   type        = string
+  default     = ""
   sensitive   = true
   description = <<-DESC
                   Ingestion key for IBM Log Analysis instance. This can be 
@@ -18,12 +29,31 @@ variable "logdna_ingestion_key" {
 
 variable "logdna_log_endpoint" {
   type        = string
+  default     = ""
   description = <<-DESC
                   rsyslog endpoint of IBM Log Analysis instance. 
                   Don't include the port. Example: 
                   syslog-a.<log_region>.logging.cloud.ibm.com
                   log_region is the region where IBM Log Analysis is deployed
                 DESC
+}
+
+variable "syslog_server_hostname" {
+  type        = string
+  default     = ""
+  description = "syslog server hostname"
+}
+
+variable "syslog_server_port" {
+  type        = number
+  default     = 0
+  description = "syslog server port"
+}
+
+variable "syslog_server_ca_cert_file" {
+  type        = string
+  default     = "/dev/null"
+  description = "CA certificate that will be used while establishing a TLS session with syslog server"
 }
 
 variable "container_registry" {

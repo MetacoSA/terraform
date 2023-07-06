@@ -6,15 +6,26 @@ resource "hpcr_tgz" "docker_compose_tgz" {
 locals {
   compose_folder = (var.crypto_server_type == "hpcs") ? "compose.hpcs" : "compose.grep11"
   tags = ["gen2", "notary", "metaco"]
+
+  syslog = jsonencode({
+    "syslog"  : {
+      "hostname" : var.syslog_server_hostname
+      "port"     : var.syslog_server_port
+      "server"   : file(var.syslog_server_ca_cert_file)
+    }
+  })
+
+  logdna = jsonencode({
+    "logDNA" : {
+      "ingestionKey" : var.logdna_ingestion_key
+      "hostname"     : var.logdna_log_endpoint
+    }
+  })
+
   contract = yamlencode({
     "env": {
       "type": "env",
-      "logging" : {
-        "logDNA" : {
-          "ingestionKey" : var.logdna_ingestion_key
-          "hostname"     : var.logdna_log_endpoint
-        }
-      },
+      "logging":  jsondecode((var.logging_type == "logdna") ? local.logdna : local.syslog),
       "env" : (var.crypto_server_type == "hpcs") ? {
         "crypto_server_access_api_key" : var.crypto_server_access_api_key
         "crypto_server_instance_id"    : var.crypto_server_instance_id

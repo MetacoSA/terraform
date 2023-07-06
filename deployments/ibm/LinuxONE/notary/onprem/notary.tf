@@ -1,8 +1,10 @@
 # Make a call to the module to get the contract generated
 module "notary_contract" {
   source = "../contract_generator"
-  logdna_ingestion_key                   = var.logdna_ingestion_key
-  logdna_log_endpoint                    = var.logdna_log_endpoint  
+  logging_type                           = var.logging_type
+  syslog_server_hostname                 = var.syslog_server_hostname
+  syslog_server_port                     = var.syslog_server_port
+  syslog_server_ca_cert_file             = var.syslog_server_ca_cert_file
   hpvs_contract_encryption_key           = var.hpvs_contract_encryption_key
   container_registry                     = var.container_registry
   container_registry_user_id             = var.container_registry_user_id
@@ -19,6 +21,8 @@ module "notary_contract" {
   # Below ones are applicable only while using HPCS from ibm cloud
   crypto_server_instance_id    = ""
   crypto_server_access_api_key = ""
+  logdna_ingestion_key         = var.logdna_ingestion_key
+  logdna_log_endpoint          = var.logdna_log_endpoint
 }
 
 resource "local_file" "meta_data" {
