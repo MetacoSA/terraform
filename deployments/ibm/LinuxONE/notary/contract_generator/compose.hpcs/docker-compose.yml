@@ -1,13 +1,13 @@
 services:
   approval-notary:
-    image: ${image_repository}@sha256:${image_tag}
+    image: ${image_repository}@sha256:${image_sha256}
 
     environment:
       HMZ_NOTARY_COLS_DIR: "/data/anti-rewind"
       HMZ_HC_TRACING_ENABLED: "true"
       HMZ_HC_TRACING_ENABLED: "true"
       HMZ_OPEN_TELEMETRY_TYPE: "disabled"
-      HMZ_NOTARY_BRIDGE_HTTP_URI: ${harmonize_notary_bridge_http_uri}
+      HMZ_NOTARY_BRIDGE_HTTP_URI: ${harmonize_notary_bridge_endpoint}
       HMZ_NOTARY_BRIDGE_HTTP_ENABLED: "true"
       HMZ_LOG_LEVEL: "TRACE"
       HMZ_NOTARY_BRIDGE_GRPC_ENABLED: "false"
