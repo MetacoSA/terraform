@@ -1,8 +1,8 @@
-variable "hpvs_contract_encryption_key" {
+variable "hpvs_contract_encryption_cert" {
   type        = string
   description =  <<DESC
-                   Absolute path to the Hyper Protect Container Runtime encryption key 
-                   downloaded from IBM. This will be used to encrypt the contract
+                   Contents of Contract encryption certificate downloaded from IBM.
+                   This will be used to encrypt the contract
                  DESC
 }
 

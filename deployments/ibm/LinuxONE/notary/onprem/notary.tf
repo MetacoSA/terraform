@@ -5,7 +5,7 @@ module "notary_contract" {
   syslog_server_hostname                 = var.syslog_server_hostname
   syslog_server_port                     = var.syslog_server_port
   syslog_server_ca_cert_file             = var.syslog_server_ca_cert_file
-  hpvs_contract_encryption_key           = var.hpvs_contract_encryption_key
+  hpvs_contract_encryption_cert          = file(var.hpvs_contract_encryption_cert)
   container_registry                     = var.container_registry
   container_registry_user_id             = var.container_registry_user_id
   container_registry_password            = var.container_registry_password
