@@ -15,5 +15,3 @@ services:
         echo "endpoint = ${crypto_server_ep11_endpoint}" >> /data/cfg/ibm.cfg
         echo "instance = ${crypto_server_instance_id}" >> /data/cfg/ibm.cfg
         /opt/entrypoint.sh
-    volumes:
-      - ".cert:/data/cert:ro"
