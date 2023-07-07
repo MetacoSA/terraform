@@ -69,7 +69,7 @@ locals {
 
 resource "hpcr_contract_encrypted" "contract_encrypted" {
   contract = local.contract
-  cert     = file(var.hpvs_contract_encryption_key)
+  cert     = var.hpvs_contract_encryption_cert
 }
 
 # This will be used by the caller of this module
