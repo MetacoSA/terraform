@@ -20,7 +20,7 @@ logdna_ingestion_key="Ingestion key of the logdna instance created in ibmcloud. 
 logdna_log_endpoint="log end point of the connected logdna instance. It will be syslog-a.<region>.logging.cloud.ibm.com. Comment this line if using syslog"
 
 hpvs_qcow2_image="Absolute path to the downloaded Hyper Protect Container Runtime image"
-hpvs_contract_encryption_key="Absolute path to the encryption key matching Hyper Protect Container Runtime image"
+hpvs_contract_encryption_cert="Absolute path to the downloaded Hyper Protect Container Runtime encryption certificate file"
 data_volume_size="Size of the data volume that is to be attached to the instance. Must be >10G"
 storage_pool_name = "name of the storage pool in libvirt host created using virsh"
 

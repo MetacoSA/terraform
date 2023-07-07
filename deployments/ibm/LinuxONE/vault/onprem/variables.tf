@@ -18,11 +18,11 @@ variable "hpvs_qcow2_image" {
   description = "Path to the Hyper Protect Container Runtime image downloaded from IBM"
 }
 
-variable "hpvs_contract_encryption_key" {
+variable "hpvs_contract_encryption_cert" {
   type        = string
   description =  <<DESC
-                   Path to the Hyper Protect Container Runtime encryption key downloaded from IBM.
-                   This will be used to encrypt the contract
+                   Path to the Hyper Protect Container Runtime encryption certificate
+                   downloaded from IBM. This will be used to encrypt the contract
                  DESC
 }
 
