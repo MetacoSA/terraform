@@ -1,18 +1,19 @@
 services:
   vault-releases:
     image: ${image_repository}@sha256:${image_sha256}
+    user: root
     environment:
+      PLATFORM: "ibm"
+      VAULT_IBM_SYSTEM: "onprem"
       VAULT_ID: ${vault_id}
       HARMONIZE_CORE_ENDPOINT: ${harmonize_api_endpoint}/internal/v1
+      VAULT_IBM_CRYPTO_SERVER_ENDPOINT: ${crypto_server_ep11_endpoint}
+      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
       HMZ_LOG_LEVEL: "TRACE"
     entrypoint: [ "/bin/bash", "-c" ]
     command:
       - | 
-        mkdir -p /data/cfg
-        echo "trusted.sig += pem:${notary_messaging_public_key}" > /data/cfg/vault.cfg
-        echo "system = onprem" > /data/cfg/ibm.cfg
-        echo "endpoint = ${crypto_server_ep11_endpoint}" >> /data/cfg/ibm.cfg
-        # add "echo  "<Ip addr of LPAR hosting grep11 server">:<domain used in setting grep11>" >> /etc/hosts
+        # add "echo  "<Ip addr of LPAR hosting grep11 server"> <domain used in setting grep11>" >> /etc/hosts
         /opt/entrypoint.sh
     volumes:
       - ".cert:/data/cert:ro"
