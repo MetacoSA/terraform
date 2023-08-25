@@ -2,16 +2,12 @@ services:
   vault-releases:
     image: ${image_repository}@sha256:${image_sha256}
     environment:
+      PLATFORM: "ibm"
       VAULT_ID: ${vault_id}
       HARMONIZE_CORE_ENDPOINT: ${harmonize_api_endpoint}/internal/v1
+      VAULT_IBM_SYSTEM: "cloud"
+      VAULT_IBM_CRYPTO_SERVER_ENDPOINT: ${crypto_server_ep11_endpoint}
+      VAULT_IBM_CRYPTO_SERVER_API_KEY: ${crypto_server_access_api_key}
+      VAULT_IBM_CRYPTO_SERVER_INSTANCE_ID: ${crypto_server_instance_id}
+      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
       HMZ_LOG_LEVEL: "TRACE"
-    entrypoint: [ "/bin/bash", "-c" ]
-    command:
-      - | 
-        mkdir -p /data/cfg
-        echo "trusted.sig += pem:${notary_messaging_public_key}" > /data/cfg/vault.cfg
-        echo "system = cloud" > /data/cfg/ibm.cfg
-        echo "apikey = ${crypto_server_access_api_key}" >> /data/cfg/ibm.cfg
-        echo "endpoint = ${crypto_server_ep11_endpoint}" >> /data/cfg/ibm.cfg
-        echo "instance = ${crypto_server_instance_id}" >> /data/cfg/ibm.cfg
-        /opt/entrypoint.sh
