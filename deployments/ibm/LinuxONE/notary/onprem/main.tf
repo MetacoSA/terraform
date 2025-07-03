@@ -11,6 +11,6 @@ terraform {
 }
 
 # terraform libvirt provider works over ssh session
-provider "libvirt" {
-  uri = format("qemu+ssh://%s@%s/system?keyfile=%s&sshauth=privkey", var.libvirt_user, var.libvirt_host, urlencode(pathexpand(var.ssh_private_key_path)))
-}
+#provider "libvirt" {
+#  uri = format("qemu+ssh://%s@%s/system?keyfile=%s&sshauth=privkey", var.libvirt_user, var.libvirt_host, urlencode(pathexpand(var.ssh_private_key_path)))
+#}

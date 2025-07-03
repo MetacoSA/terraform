@@ -1,13 +1,20 @@
+version: '3.6'
+
 services:
+  kmsconnect:
+    image: ${kmsconnect_image_repository}@sha256:${kmsconnect_image_sha256}
+    volumes:
+      - "./ibm.cfg:/app/cfg/ibm.cfg"
+    restart: always
+
   vault-releases:
-    image: ${image_repository}@sha256:${image_sha256}
+    image: ${vault_image_repository}@sha256:${vault_image_sha256}
     environment:
-      PLATFORM: "ibm"
+      PLATFORM: kms
+      VAULT_BRIDGE_LOGLEVEL: 7
+      VAULT_CORE_LOGLEVEL: 7
+      VAULT_KMS_ENDPOINT: kmsconnect:10000
+      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
       VAULT_ID: ${vault_id}
       HARMONIZE_CORE_ENDPOINT: ${harmonize_api_endpoint}/internal/v1
-      VAULT_IBM_SYSTEM: "cloud"
-      VAULT_IBM_CRYPTO_SERVER_ENDPOINT: ${crypto_server_ep11_endpoint}
-      VAULT_IBM_CRYPTO_SERVER_API_KEY: ${crypto_server_access_api_key}
-      VAULT_IBM_CRYPTO_SERVER_INSTANCE_ID: ${crypto_server_instance_id}
-      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
-      HMZ_LOG_LEVEL: "TRACE"
+    restart: always

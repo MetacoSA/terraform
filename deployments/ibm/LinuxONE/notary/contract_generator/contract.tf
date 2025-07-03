@@ -15,26 +15,20 @@ locals {
     }
   })
 
-  logdna = jsonencode({
-    "logDNA" : {
-      "ingestionKey" : var.logdna_ingestion_key
-      "hostname"     : var.logdna_log_endpoint
+  cloudlogs = jsonencode({
+    "logRouter" : {
+      "iamApiKey" : var.cloudlogs_api_key
+      "hostname"  : var.cloudlogs_ingestion_endpoint
     }
   })
 
   contract = yamlencode({
     "env": {
       "type": "env",
-      "logging":  jsondecode((var.logging_type == "logdna") ? local.logdna : local.syslog),
-      "env" : (var.crypto_server_type == "hpcs") ? {
-        "crypto_server_access_api_key" : var.crypto_server_access_api_key
-        "crypto_server_instance_id"    : var.crypto_server_instance_id
-        "crypto_server_ep11_host"      : var.crypto_server_ep11_host
-        "crypto_server_ep11_port"      : var.crypto_server_ep11_port
-       } : {
-        "crypto_server_ep11_host"      : var.crypto_server_ep11_host
-        "crypto_server_ep11_port"      : var.crypto_server_ep11_port
-      },
+      "logging":  jsondecode((var.logging_type == "cloudlogs") ? local.cloudlogs : local.syslog),
+      "env" : {
+        "harmonize_notary_bridge_endpoint" : var.harmonize_notary_bridge_endpoint
+       }
       "volumes":  {
         "data": {
           "seed": var.volume_encryption_seed_phrase_user
@@ -59,9 +53,10 @@ locals {
         }
       },
       "env": {
-        "image_repository"                 : format("%s/%s", var.container_registry, var.container_image_repository)
-        "image_sha256"                     : var.container_image_sha256
-        "harmonize_notary_bridge_endpoint" : var.harmonize_notary_bridge_endpoint
+        "notary_image_repository"          : format("%s/%s", var.container_registry, var.notary_container_image_repository)
+        "notary_image_sha256"              : var.notary_container_image_sha256
+        "kmsconnect_image_repository"      : format("%s/%s", var.container_registry, var.kmsconnect_container_image_repository)
+        "kmsconnect_image_sha256"          : var.kmsconnect_container_image_sha256
       }
     }
   })

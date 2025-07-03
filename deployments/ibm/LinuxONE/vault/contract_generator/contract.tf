@@ -15,25 +15,20 @@ locals {
     }
   })
 
-  logdna = jsonencode({
-    "logDNA" : {
-      "ingestionKey" : var.logdna_ingestion_key
-      "hostname"     : var.logdna_log_endpoint
+  cloudlogs = jsonencode({
+    "logRouter" : {
+      "iamApiKey" : var.cloudlogs_api_key
+      "hostname"  : var.cloudlogs_ingestion_endpoint
     }
   })
 
   contract = yamlencode({
-    "env": { 
+    "env": {
       "type": "env",
-      "logging":  jsondecode((var.logging_type == "logdna") ? local.logdna : local.syslog),
-      "env" : (var.crypto_server_type == "hpcs") ? {
-        "crypto_server_access_api_key"  : var.crypto_server_access_api_key
-        "crypto_server_instance_id"     : var.crypto_server_instance_id
+      "logging":  jsondecode((var.logging_type == "cloudlogs") ? local.cloudlogs : local.syslog),
+      "env" : {
         "notary_messaging_public_key"   : var.notary_messaging_public_key
-        "crypto_server_ep11_endpoint"   : format("%s:%s", var.crypto_server_ep11_host, var.crypto_server_ep11_port)
-      } : {
-        "notary_messaging_public_key"   : var.notary_messaging_public_key
-        "crypto_server_ep11_endpoint"   : format("%s:%s", var.crypto_server_ep11_host, var.crypto_server_ep11_port)
+        "harmonize_api_endpoint"        : var.harmonize_api_endpoint
       }
     },
     "workload": {
@@ -48,10 +43,11 @@ locals {
         },
       },
       "env": {
-        "image_repository"       : format("%s/%s", var.container_registry, var.container_image_repository)
-        "image_sha256"           : var.container_image_sha256
-        "vault_id"               : var.vault_uuid
-        "harmonize_api_endpoint" : var.harmonize_api_endpoint
+        "vault_image_repository"       : format("%s/%s", var.container_registry, var.vault_container_image_repository)
+        "vault_image_sha256"           : var.vault_container_image_sha256
+        "kmsconnect_image_repository"  : format("%s/%s", var.container_registry, var.kmsconnect_container_image_repository)
+        "kmsconnect_image_sha256"      : var.kmsconnect_container_image_sha256
+        "vault_id"                     : var.vault_uuid
       }
     }
   })

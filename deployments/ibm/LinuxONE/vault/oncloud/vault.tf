@@ -9,20 +9,16 @@ module "vault_contract" {
   container_registry                     = var.container_registry
   container_registry_user_id             = var.container_registry_user_id
   container_registry_password            = var.container_registry_password
-  container_image_repository             = var.container_image_repository
-  container_image_sha256                 = var.container_image_sha256
+  vault_container_image_repository       = var.vault_container_image_repository
+  vault_container_image_sha256           = var.vault_container_image_sha256
+  kmsconnect_container_image_repository  = var.kmsconnect_container_image_repository
+  kmsconnect_container_image_sha256      = var.kmsconnect_container_image_sha256
   harmonize_api_endpoint                 = var.harmonize_api_endpoint
   notary_messaging_public_key            = var.notary_messaging_public_key
-  crypto_server_ep11_host                = var.crypto_server_ep11_host
-  crypto_server_ep11_port                = var.crypto_server_ep11_port
   crypto_server_type                     = var.crypto_server_type
   vault_uuid                             = var.vault_uuid
-
-  # Below ones are applicable only while using HPCS from ibm cloud
-  crypto_server_instance_id    = var.crypto_server_instance_id
-  crypto_server_access_api_key = var.crypto_server_access_api_key
-  logdna_ingestion_key         = var.logdna_ingestion_key
-  logdna_log_endpoint          = var.logdna_log_endpoint
+  cloudlogs_api_key                      = var.cloudlogs_api_key
+  cloudlogs_ingestion_endpoint           = var.cloudlogs_ingestion_endpoint
 }
 
 locals {
