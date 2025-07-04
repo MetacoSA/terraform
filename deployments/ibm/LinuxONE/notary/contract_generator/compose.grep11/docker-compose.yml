@@ -1,36 +1,30 @@
-services:
-  approval-notary:
-    image: ${image_repository}@sha256:${image_sha256}
+version: '3.6'
 
+services:
+  kmsconnect:
+    image: ${kmsconnect_image_repository}@sha256:${kmsconnect_image_sha256}
+    volumes:
+      - "./ibm.cfg:/app/cfg/ibm.cfg:ro"
+      - "./cert:/data/cert:ro"
+    restart: always
+
+  approval-notary:
+    depends_on:
+      - kmsconnect
+    image: ${notary_image_repository}@sha256:${notary_image_sha256}
     environment:
       HMZ_NOTARY_COLS_DIR: "/data/anti-rewind"
-      HMZ_HC_TRACING_ENABLED: "true"
       HMZ_HC_TRACING_ENABLED: "true"
       HMZ_OPEN_TELEMETRY_TYPE: "disabled"
       HMZ_NOTARY_BRIDGE_HTTP_URI: ${harmonize_notary_bridge_endpoint}
       HMZ_NOTARY_BRIDGE_HTTP_ENABLED: "true"
       HMZ_LOG_LEVEL: "TRACE"
       HMZ_NOTARY_BRIDGE_GRPC_ENABLED: "false"
-      HMZ_NOTARY_HPCS_ENABLED: "true"
-      HMZ_NOTARY_HPCS_HOST: ${crypto_server_ep11_host}
-      HMZ_NOTARY_HPCS_GRPC_PORT: ${crypto_server_ep11_port}
-
-      # IBM LinuxONE on-premise
-      HMZ_NOTARY_HPCS_CLIENT_CERT_ENABLED: "true"
-      HMZ_NOTARY_HPCS_CERT_CA_FILE: "/opt/approval-notary/cert/ca.pem"
-      HMZ_NOTARY_HPCS_CERT_CHAIN_FILE: "/opt/approval-notary/cert/client-certificate-chain.pem"
-      HMZ_NOTARY_HPCS_CERT_KEY_FILE: "/opt/approval-notary/cert/client-key.pkcs8.pem"
-
-    entrypoint: [ "/bin/bash", "-c" ]
-    command:
-      - | 
-        # add "echo  "<Ip addr of LPAR hosting grep11 server">:<domain used in setting grep11>" >> /etc/hosts
-        /opt/entrypoint.sh
-
+      HMZ_NOTARY_KMS_ENABLED: "true"
+      HMZ_NOTARY_KMS_HOST: kmsconnect
+      HMZ_NOTARY_KMS_GRPC_PORT: 10000
+    restart: always
     volumes:
       # This is a must as it is needed for anti-rewind file
       # !!! Changing the target mount point will result in anti-rewind file getting lost on reboot !!!
       - "/mnt/data:/data/anti-rewind"
-
-      # This is only for communicating with grep11 server
-      - ".cert:/opt/approval-notary/cert:ro"

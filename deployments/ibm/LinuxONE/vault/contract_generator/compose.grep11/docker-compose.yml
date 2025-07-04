@@ -1,19 +1,21 @@
+version: '3.6'
+
 services:
+  kmsconnect:
+    image: ${kmsconnect_image_repository}@sha256:${kmsconnect_image_sha256}
+    volumes:
+      - "./ibm.cfg:/app/cfg/ibm.cfg"
+      - "./cert:/data/cert:ro"
+    restart: always
+
   vault-releases:
-    image: ${image_repository}@sha256:${image_sha256}
-    user: root
+    image: ${vault_image_repository}@sha256:${vault_image_sha256}
     environment:
-      PLATFORM: "ibm"
-      VAULT_IBM_SYSTEM: "onprem"
+      PLATFORM: kms
+      VAULT_BRIDGE_LOGLEVEL: 7
+      VAULT_CORE_LOGLEVEL: 7
+      VAULT_KMS_ENDPOINT: kmsconnect:10000
+      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
       VAULT_ID: ${vault_id}
       HARMONIZE_CORE_ENDPOINT: ${harmonize_api_endpoint}/internal/v1
-      VAULT_IBM_CRYPTO_SERVER_ENDPOINT: ${crypto_server_ep11_endpoint}
-      VAULT_TRUSTED_SIG: pem:${notary_messaging_public_key}
-      HMZ_LOG_LEVEL: "TRACE"
-    entrypoint: [ "/bin/bash", "-c" ]
-    command:
-      - | 
-        # add "echo  "<Ip addr of LPAR hosting grep11 server"> <domain used in setting grep11>" >> /etc/hosts
-        /opt/entrypoint.sh
-    volumes:
-      - ".cert:/data/cert:ro"
+    restart: always

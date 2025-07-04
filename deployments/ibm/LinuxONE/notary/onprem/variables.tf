@@ -42,11 +42,13 @@ variable "data_volume_size" {
       
 variable "volume_encryption_seed_phrase_workload" {
   type        = string
+  sensitive   = true
   description = "volume encryption seed phrase that is part of workload section"
 }
 
 variable "volume_encryption_seed_phrase_user" {
   type        = string
+  sensitive   = true
   description = "volume encryption seed phrase that is part of env section"
 }
 
@@ -67,42 +69,33 @@ variable "num_vcpu" {
   description = "Number of vCPUs to be assigned to the VSI"
 }
 
+variable "logging_type" {
+  type        = string
+  description = "Logging solution to which the Vault has to send the logs to"
+  validation {
+       condition  = ( var.logging_type == "cloudlogs" ||
+                      var.logging_type == "syslog" )
+       error_message = "logging_type must be either syslog or cloudlogs"
+  }
+}
+
+variable "cloudlogs_api_key" {
+  type        = string
+  default     = ""
+  sensitive   = true
+  description = "API key used to access IBM Cloud Logs"
+}
+
+variable "cloudlogs_ingestion_endpoint" {
+  type        = string
+  default     = ""
+  description = "Cloud Logs ingestion endpoint. Found under 'Endpoints' section"
+}
+
 variable "ssh_private_key_path" {
   type        = string
   default     = "~/.ssh/id_rsa"
   description = "Path to SSH private key file. Corresponding public key must be in libvirt host's authorised_keys"
-}
-
-variable "logging_type" {
-  type        = string
-  description = "Logging solution to which the Notary has to send the logs to"
-  validation {
-       condition  = ( var.logging_type == "logdna" ||
-                      var.logging_type == "syslog" )
-       error_message = "logging_type must be either syslog or logdna"
-  }
-}
-
-variable "logdna_ingestion_key" {
-  type        = string
-  default     = ""
-  sensitive   = true
-  description = <<-DESC
-                  Ingestion key for IBM Log Analysis instance. This can be 
-                  obtained from "Linux/Ubuntu" section of "Logging resource" 
-                  tab of IBM Log Analysis instance
-                DESC
-}
-
-variable "logdna_log_endpoint" {
-  type        = string
-  default     = ""
-  description = <<-DESC
-                  rsyslog endpoint of IBM Log Analysis instance. 
-                  Don't include the port. Example: 
-                  syslog-a.<log_region>.logging.cloud.ibm.com
-                  log_region is the region where IBM Log Analysis is deployed
-                DESC
 }
 
 variable "syslog_server_hostname" {
@@ -148,7 +141,7 @@ variable "container_registry_password" {
                 DESC
 }
 
-variable "container_image_repository" {
+variable "notary_container_image_repository" {
   type        = string
   description = <<DESC
                   Path of the repository having the image. Example:
@@ -156,27 +149,27 @@ variable "container_image_repository" {
                 DESC
 }
 
-variable "container_image_sha256" {
+variable "notary_container_image_sha256" {
   type        = string
-  description = "sha256 of the container image"
+  description = "sha256 of the notary container image"
+}
+
+variable "kmsconnect_container_image_repository" {
+  type        = string
+  description = <<DESC
+                  Path of the repository having the image. Example:
+                  xyz.icr.io/abcd/kms-ibm
+                DESC
+}
+
+variable "kmsconnect_container_image_sha256" {
+  type        = string
+  description = "sha256 of the kmsconnect container image"
 }
 
 variable "harmonize_notary_bridge_endpoint" {
   type        = string
   description = "Endpoint of the harmonize notary-bridge service"
-}
-
-variable "crypto_server_ep11_host" {
-  type        = string
-  sensitive   = true
-  description = "GREP11 server IP / hostname"
-}
-
-variable "crypto_server_ep11_port" {
-  type        = string
-  default     = "9876"
-  sensitive   = true
-  description = "GREP11 server port"
 }
 
 variable "crypto_server_type" {
