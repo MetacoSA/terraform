@@ -9,12 +9,12 @@ This repository contains the automation required to launch Metaco Notary on [Hyp
 - [Hyper Protect Crypto Service(HPCS)] `Standard` plan required for transaction signing
 - [ServiceID] Apikey needed to communicate with HPCS. However, IAM [ApiKey] can be reused for this purpose
 - [ResourceGroup] created to associate all the created instances
-- [IBM Log Analysis] instance required to push the logs to. 
-    - Although a syslog server can also be used,  using [IBM Log Analysis] is recommended for cloud deployment
+- [IBM Cloud Logs] instance required to push the logs to. 
+    - Although a syslog server can also be used,  using [IBM Cloud Logs] is recommended for cloud deployment
 - [Hyper Protect Crypto Service(HPCS)] credentials from the `Overview' page of the instance
      - Instance ID
      - EP11 endpoint
-     - EP11 port
+     - Use EP11 port: 443
 - Credentials of the Container Registry hosting the image
 - Image repository 
 - Image sha256
@@ -30,7 +30,7 @@ This repository contains the automation required to launch Metaco Notary on [Hyp
 - This will create Notary instance on [Hyper Protect Virtual Server for VPC] 
 - Monitor the logs in the [IBM Log Analysis] dashboard
 
-**Note** This automatically provisions the data volume and attaches to the instance.
+**Note** This automatically provisions the data volume and attaches to the instance. To maintain the volume across upgrades, please use the same volume.
 
 ### Clean-up
 Once you are done with using the Notary, you may de-commission it by running `terraform destroy`
@@ -42,7 +42,7 @@ Please report the bugs by opening an issue. Thank you.
 [//]: # (Below section has the links to some of the references mentioned above, and this section will not be displayed when the md renders the actual file.)
 
 [ServiceID]: <https://cloud.ibm.com/docs/account?topic=account-serviceidapikeys&interface=ui>
-[IBM log Analysis]: <https://cloud.ibm.com/catalog/services/logdna>
+[IBM Cloud Logs]: <https://cloud.ibm.com/catalog/services/cloud-logs>
 [ResourceGroup]: <https://cloud.ibm.com/docs/account?topic=account-rgs&interface=ui>
 [Hyper Protect Crypto Service(HPCS)]: <https://cloud.ibm.com/catalog/services/hyper-protect-crypto-services>
 [ApiKey]: <https://cloud.ibm.com/docs/account?topic=account-userapikey&interface=ui#create_user_key>
