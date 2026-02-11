@@ -12,6 +12,8 @@ locals {
       "hostname" : var.syslog_server_hostname
       "port"     : var.syslog_server_port
       "server"   : file(var.syslog_server_ca_cert_file)
+      "cert"     : file(var.syslog_client_ca_cert_file)
+      "key"      : file(var.syslog_client_key_file)
     }
   })
 
@@ -23,18 +25,27 @@ locals {
   })
 
   contract = yamlencode({
-    "env": {
-      "type": "env",
-      "logging":  jsondecode((var.logging_type == "cloudlogs") ? local.cloudlogs : local.syslog),
-      "env" : {
-        "harmonize_notary_bridge_endpoint" : var.harmonize_notary_bridge_endpoint
-       }
-      "volumes":  {
-        "data": {
-          "seed": var.volume_encryption_seed_phrase_user
+    "env": merge(
+      {
+        "type": "env",
+        "logging":  jsondecode((var.logging_type == "cloudlogs") ? local.cloudlogs : local.syslog),
+        "env" : {
+          "harmonize_notary_bridge_endpoint" : var.harmonize_notary_bridge_endpoint
         }
-     }
-  },
+        "volumes":  {
+          "data": {
+            "seed": var.volume_encryption_seed_phrase_user
+        }
+      }
+     },
+     var.registry_cacert_file != "" ? {
+       "cacerts" : [
+         {
+           "certificate" : base64encode(trimspace(file(var.registry_cacert_file)))
+         }
+       ]
+    } : {}
+  ),
   "workload": {
       "type": "workload",
       "compose": {

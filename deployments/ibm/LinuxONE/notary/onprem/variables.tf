@@ -113,7 +113,19 @@ variable "syslog_server_port" {
 variable "syslog_server_ca_cert_file" {
   type        = string
   default     = "/dev/null"
-  description = "CA certificate that will be used while establishing a TLS session with syslog server"
+  description = "CA certificate that will be used while establishing a mTLS session with syslog server"
+}
+
+variable "syslog_client_ca_cert_file" {
+  type        = string
+  default     = "/dev/null"
+  description = "Client CA certificate that will be used while establishing a mTLS session with syslog server"
+}
+
+variable "syslog_client_key_file" {
+  type        = string
+  default     = "/dev/null"
+  description = "Client key that will be used while establishing a mTLS session with syslog server"
 }
 
 variable "container_registry" {
@@ -180,4 +192,10 @@ variable "crypto_server_type" {
                       var.crypto_server_type == "hpcs" )
        error_message = "crypto server must either be grep11 or hpcs"
   }
+}
+
+variable "registry_cacert_file" {
+  type        = string
+  default     = ""
+  description = "Path to registry CA certificate file. If set, certificate will be included in contract."
 }
