@@ -5,6 +5,8 @@ module "vault_contract" {
   syslog_server_hostname                 = var.syslog_server_hostname
   syslog_server_port                     = var.syslog_server_port
   syslog_server_ca_cert_file             = var.syslog_server_ca_cert_file
+  syslog_client_ca_cert_file             = var.syslog_client_ca_cert_file
+  syslog_client_key_file                 = var.syslog_client_key_file
   hpvs_contract_encryption_cert          = file(var.hpvs_contract_encryption_cert)
   container_registry                     = var.container_registry
   container_registry_user_id             = var.container_registry_user_id
@@ -19,6 +21,7 @@ module "vault_contract" {
   vault_uuid                             = var.vault_uuid
   cloudlogs_api_key                      = var.cloudlogs_api_key
   cloudlogs_ingestion_endpoint           = var.cloudlogs_ingestion_endpoint
+  registry_cacert_file                   = var.registry_cacert_file
 }
 
 resource "local_file" "meta_data" {
